@@ -8,6 +8,12 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+
+{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NoRebindableSyntax #-}
+
+
+
 module Duckling.Duration.FR.Rules
   ( rules ) where
 
@@ -21,6 +27,18 @@ import qualified Duckling.Numeral.Types as TNumeral
 import Duckling.Regex.Types
 import qualified Duckling.TimeGrain.Types as TG
 import Duckling.Types
+
+
+
+
+import Data.Semigroup ((<>))
+import qualified Data.Text as Text
+
+import Duckling.Duration.Types (DurationData(..))
+import Duckling.Numeral.Helpers (parseInt, parseInteger)
+import qualified Duckling.Duration.Types as TDuration
+import qualified Duckling.TimeGrain.Types as TG
+
 
 ruleNumeralQuotes :: Rule
 ruleNumeralQuotes = Rule
@@ -92,6 +110,24 @@ ruleDurationEnviron = Rule
       _ -> Nothing
   }
 
+ruleDurationHoursAndMinutes :: Rule
+ruleDurationHoursAndMinutes = Rule
+  { name = "<integer> heure et <integer>"
+  , pattern =
+    [ Predicate isNatural
+    , regex "heures?( et)?"
+    , Predicate isNatural
+    ]
+  , prod = \case
+      (Token Numeral h:
+       _:
+       Token Numeral m:
+       _) -> Just . Token Duration . duration TG.Minute $
+         (floor $ TNumeral.value m) + 60 * floor (TNumeral.value h)
+      _ -> Nothing
+  }
+
+
 rules :: [Rule]
 rules =
   [ ruleUneUnitofduration
@@ -100,4 +136,5 @@ rules =
   , ruleTroisQuartsDHeure
   , ruleDurationEnviron
   , ruleNumeralQuotes
+  , ruleDurationHoursAndMinutes
   ]

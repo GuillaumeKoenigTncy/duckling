@@ -160,6 +160,18 @@ classifiers
                      ClassData{prior = -0.9740495660263475,
                                unseen = -5.0106352940962555,
                                likelihoods = HashMap.fromList [("", 0.0)], n = 148}}),
+       ("<integer> heure and <integer>",
+        Classifier{okData =
+                     ClassData{prior = -infinity, unseen = -1.3862943611198906,
+                               likelihoods = HashMap.fromList [], n = 0},
+                   koData =
+                     ClassData{prior = 0.0, unseen = -2.3025850929940455,
+                               likelihoods =
+                                 HashMap.fromList
+                                   [("number (0..16)number (0..16)", -1.0986122886681098),
+                                    ("integer (numeric)integer (numeric)", -0.8109302162163288),
+                                    ("number (0..16)number (20..60)", -1.5040773967762742)],
+                               n = 6}}),
        ("<named-month>",
         Classifier{okData =
                      ClassData{prior = 0.0, unseen = -1.6094379124341003,

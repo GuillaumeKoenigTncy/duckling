@@ -62,4 +62,16 @@ allExamples = concat
   , examples (DurationData 2 Year)
              [ "2 ans"
              ]
+  , examples (DurationData 1 Hour)
+             [ "1 heure"
+             ]
+  , examples (DurationData 80 Minute)
+             [ "1 heure 20"
+             ]
+  , examples (DurationData 2 Hour)
+             [ "2 heures"
+             ]
+  , examples (DurationData 160 Minute)
+             [ "2 heures 40"
+             ]
   ]
